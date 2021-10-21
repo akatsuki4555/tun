@@ -1,0 +1,24 @@
+name: build
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    timeout-minutes: 9999
+
+    steps:
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: checkout repo
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ secrets.REPO }}
+        token: ${{ secrets.PAT }}
+    - name: start build
+      run: python main.py > log
+      env:
+        PASSWORD: ${{ secrets.PASSWORD }}
